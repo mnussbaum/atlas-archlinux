@@ -25,28 +25,6 @@
       "ssh_password": "vagrant",
       "headless": true,
       "shutdown_command": "{{user `shutdowncmd`}}"
-    },
-    {
-      "type": "parallels-pvm",
-      "source_path": "{{user `outdir`}}/pristine/parallels/archlinux-{{user `archversion`}}-base.pvm",
-      "output_directory": "{{user `outdir`}}/tainted/parallels",
-      "parallels_tools_flavor": "lin",
-      "parallels_tools_guest_path": "/tmp/prl-tools-{{.Flavor}}.iso",
-      "vm_name": "archlinux-{{user `archversion`}}",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "reassign_mac": true,
-      "shutdown_command": "{{user `shutdowncmd`}}"
-    },
-    {
-      "type": "vmware-vmx",
-      "source_path": "{{user `outdir`}}/pristine/vmware/archlinux-{{user `archversion`}}-base.vmx",
-      "output_directory": "{{user `outdir`}}/tainted/vmware",
-      "vm_name": "archlinux-{{user `archversion`}}",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "headless": true,
-      "shutdown_command": "{{user `shutdowncmd`}}"
     }
   ],
   "provisioners": [
@@ -54,7 +32,7 @@
       "type": "file",
       "source": "support/shared/arm-mirrorlist",
       "destination": "/tmp/arm-mirrorlist",
-      "only": [ "virtualbox-ovf", "parallels-pvm" ]
+      "only": [ "virtualbox-ovf" ]
     },
     {
       "type": "file",
@@ -66,28 +44,6 @@
       "type": "shell",
       "inline": [ "sudo /tmp/virtualbox/install.sh" ],
       "only": [ "virtualbox-ovf" ]
-    },
-    {
-      "type": "file",
-      "source": "support/parallels",
-      "destination": "/tmp/parallels",
-      "only": [ "parallels-pvm" ]
-    },
-    {
-      "type": "shell",
-      "inline": [ "sudo /tmp/parallels/install.sh" ],
-      "only": [ "parallels-pvm" ]
-    },
-    {
-      "type": "file",
-      "source": "support/vmware",
-      "destination": "/tmp/vmware",
-      "only": [ "vmware-vmx" ]
-    },
-    {
-      "type": "shell",
-      "inline": [ "sudo /tmp/vmware/install.sh" ],
-      "only": [ "vmware-vmx" ]
     }
   ],
   "post-processors": [
@@ -95,14 +51,6 @@
       "type": "vagrant",
       "output": "{{user `outdir`}}/packed/archlinux-{{.Provider}}.box",
       "keep_input_artifact": true
-    },
-    {
-      "type": "vagrant-cloud",
-      "box_tag": "dreamscapes/archlinux",
-      "version": "{{user `archversion`}}",
-      "version_description": "Arch Linux - Base\n\n> For more information about the builds head over to [Github](https://github.com/Dreamscapes/atlas-archlinux).",
-      "no_release": true,
-      "access_token": "{{user `atlastoken`}}"
     }]
   ]
 }

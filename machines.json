@@ -28,7 +28,7 @@
       "http_directory": "support",
       "headless": true,
       "boot_command": [
-        "<enter><wait10><wait10>",
+        "<enter><wait10><wait10><wait10>",
         "curl {{.HTTPIP}}:{{.HTTPPort}}/bootstrap.sh | bash<enter>"
       ],
       "shutdown_command": "{{user `shutdowncmd`}}",
@@ -40,55 +40,6 @@
         [ "modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}" ],
         [ "modifyvm", "{{.Name}}", "--rtcuseutc", "on" ]
       ]
-    },
-    {
-      "type": "parallels-iso",
-      "guest_os_type": "linux-2.6",
-      "output_directory": "{{user `outdir`}}/pristine/parallels",
-      "parallels_tools_mode": "disable",
-      "iso_url": "{{user `pathtoiso`}}/{{user `archversion`}}/archlinux-{{user `archversion`}}-dual.iso",
-      "vm_name": "archlinux-{{user `archversion`}}-base",
-      "iso_checksum": "{{user `isochecksum`}}",
-      "iso_checksum_type": "{{user `isochecksumtype`}}",
-      "ssh_username": "root",
-      "http_directory": "support",
-      "boot_command": [
-        "<enter><wait10><wait10>",
-        "curl {{.HTTPIP}}:{{.HTTPPort}}/bootstrap.sh | bash<enter>"
-      ],
-      "shutdown_command": "{{user `shutdowncmd`}}",
-      "disk_size": "{{user `disksize`}}",
-      "hard_drive_interface": "sata",
-      "prlctl": [
-        [ "set", "{{.Name}}", "--videosize", "{{user `vramsize`}}" ],
-        [ "set", "{{.Name}}", "--memsize", "{{user `ramsize`}}" ],
-        [ "set", "{{.Name}}", "--cpus", "{{user `cpus`}}" ]
-      ]
-    },
-    {
-      "type": "vmware-iso",
-      "guest_os_type": "other3xlinux-64",
-      "output_directory": "{{user `outdir`}}/pristine/vmware",
-      "iso_url": "{{user `pathtoiso`}}/{{user `archversion`}}/archlinux-{{user `archversion`}}-dual.iso",
-      "vm_name": "archlinux-{{user `archversion`}}-base",
-      "vmdk_name": "archlinux-{{user `archversion`}}-base",
-      "iso_checksum": "{{user `isochecksum`}}",
-      "iso_checksum_type": "{{user `isochecksumtype`}}",
-      "ssh_username": "root",
-      "http_directory": "support",
-      "headless": true,
-      "boot_command": [
-        "<enter><wait10><wait10>",
-        "curl {{.HTTPIP}}:{{.HTTPPort}}/bootstrap.sh | bash<enter>"
-      ],
-      "shutdown_command": "{{user `shutdowncmd`}}",
-      "disk_size": "{{user `disksize`}}",
-      "disk_type_id": 0,
-      "vmx_data": {
-        "svga.vramSize": "{{user `vramsizebytes`}}",
-        "memsize": "{{user `ramsize`}}",
-        "numvcpus": "{{user `cpus`}}"
-      }
     }
   ],
   "provisioners": [

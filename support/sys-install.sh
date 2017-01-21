@@ -9,27 +9,27 @@
 echo -e "o\n  n\n p\n \n \n +200M\n  n\n p\n \n \n \n  w" | fdisk /dev/sda
 
 # Format filesystems
-mkfs.btrfs --label boot /dev/sda1
-mkfs.btrfs --label root /dev/sda2
+mkfs.ext2 /dev/sda1
+mkfs.ext4 /dev/sda2
 
 # Mount the newly created filesystems
 mkdir -p /mnt
-mount -o defaults,compress=lzo,space_cache /dev/sda2 /mnt
+mount /dev/sda2 /mnt
 mkdir -p /mnt/boot
-mount -o defaults,compress=lzo,space_cache /dev/sda1 /mnt/boot
+mount /dev/sda1 /mnt/boot
 
 # Override pacman repos (the primary one is too slow for my network :) )
 # (we WILL restore the mirrorlist to the original one for the final VM)
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 cat <<'LIST' > /etc/pacman.d/mirrorlist
-Server = http://mirror.archlinux.no/$repo/os/$arch
-Server = http://mirror.bytemark.co.uk/archlinux/$repo/os/$arch
-Server = http://lug.mtu.edu/archlinux/$repo/os/$arch
-Server = http://mirror.one.com/archlinux/$repo/os/$arch
+Server = https://mirrors.ocf.berkeley.edu/archlinux/$repo/os/$arch
+Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch
+Server = https://mirror.grig.io/archlinux/$repo/os/$arch
+Server = https://arch.localmsp.org/arch/$repo/os/$arch
 LIST
 
 # Install required system packages
-pacstrap /mnt btrfs-progs base base-devel grub openssh
+pacstrap /mnt base base-devel grub openssh
 
 # Generate fstab
 genfstab -U -p /mnt >> /mnt/etc/fstab

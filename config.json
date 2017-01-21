@@ -1,6 +1,6 @@
 {
-  "archversion": "2016.08.01",
-  "isochecksum": "6db5a9e46267ba7ec4d9ae79d141e5a6d9d3cf88",
+  "archversion": "2017.01.01",
+  "isochecksum": "1acb685c9a9f2df6eef15d2fc3e8e93edc33c9da",
   "isochecksumtype": "sha1",
-  "pathtoiso": "http://archlinux.mirror.dkm.cz/pub/archlinux/iso"
+  "pathtoiso": "https://mirrors.ocf.berkeley.edu/archlinux/iso"
 }
