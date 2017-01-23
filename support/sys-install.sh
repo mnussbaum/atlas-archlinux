@@ -8,24 +8,27 @@
 # /dev/sda2   411648    ???   83  Linux
 echo -e "o\n  n\n p\n \n \n +200M\n  n\n p\n \n \n \n  w" | fdisk /dev/sda
 
+# Key for encrypting root volume
+echo -n "vagrant" | cryptsetup -v --cipher aes-xts-plain64 --key-size 256 luksFormat /dev/sda2 -
+echo -n "vagrant" | cryptsetup luksOpen /dev/sda2 lvm
+pvcreate /dev/mapper/lvm
+vgcreate vgcrypt /dev/mapper/lvm
+lvcreate --extents +100%FREE -n root vgcrypt
+
 # Format filesystems
 mkfs.ext2 /dev/sda1
-mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/mapper/vgcrypt-root
 
 # Mount the newly created filesystems
 mkdir -p /mnt
-mount /dev/sda2 /mnt
+mount /dev/mapper/vgcrypt-root /mnt
 mkdir -p /mnt/boot
 mount /dev/sda1 /mnt/boot
 
-# Override pacman repos (the primary one is too slow for my network :) )
-# (we WILL restore the mirrorlist to the original one for the final VM)
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 cat <<'LIST' > /etc/pacman.d/mirrorlist
-Server = https://mirrors.ocf.berkeley.edu/archlinux/$repo/os/$arch
 Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch
+Server = https://mirrors.ocf.berkeley.edu/archlinux/$repo/os/$arch
 Server = https://mirror.grig.io/archlinux/$repo/os/$arch
-Server = https://arch.localmsp.org/arch/$repo/os/$arch
 LIST
 
 # Install required system packages
@@ -43,9 +46,3 @@ arch-chroot /mnt /root/shared/kernel-lock.sh
 arch-chroot /mnt /root/shared/os-config.sh
 # Configure vagrant...
 arch-chroot /mnt /root/shared/vagrant-config.sh
-
-# Restore the original mirrorlist
-mv /etc/pacman.d/mirrorlist.bak /mnt/etc/pacman.d/mirrorlist
-
-# Cleanup all the mess
-rm -r /mnt/root/shared

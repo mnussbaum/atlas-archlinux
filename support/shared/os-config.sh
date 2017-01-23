@@ -20,12 +20,23 @@ ln -s /usr/share/zoneinfo/UTC /etc/localtime
 systemctl enable dhcpcd.service
 systemctl enable sshd.service
 
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:vgcrypt"
+cat <<GRUB_DEFAULTS >> /etc/default/grub
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:vgcrypt"
+GRUB_DEFAULTS
+
 # Configure bootloader
 grub-install --target=i386-pc --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Clean all downloaded packages and caches to save as much space as possible
 pacman -S --clean --clean --noconfirm
+
+HOOKS="base udev autodetect modconf block consolefont keymap keyboard encrypt lvm2 filesystems fsck"
+cat <<HOOKS >> /etc/mkinitcpio.conf
+HOOKS="base udev autodetect modconf block consolefont keymap keyboard encrypt lvm2 filesystems fsck"
+HOOKS
+mkinitcpio -p linux
 
 # Do not modify ls and prompts for all new users
 patch -p 0 -i /root/shared/bashrc.diff

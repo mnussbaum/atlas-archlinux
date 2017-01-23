@@ -7,7 +7,7 @@ This fixes the "Fast TSC calibration failed" boot error
  GRUB_DISTRIBUTOR="Arch"
  GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 -GRUB_CMDLINE_LINUX=""
-+GRUB_CMDLINE_LINUX="clocksource=acpi_pm"
++GRUB_CMDLINE_LINUX="clocksource=acpi_pm cryptdevice=/dev/sda2:vgcrypt"
 
  # Preload both GPT and MBR modules so that they are not missed
  GRUB_PRELOAD_MODULES="part_gpt part_msdos"

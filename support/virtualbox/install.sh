@@ -45,4 +45,8 @@ LIST
 ### Finalise... ###
 
 # Regenerate ramdisk
+HOOKS="base udev autodetect modconf block consolefont keymap keyboard encrypt lvm2 filesystems fsck"
+cat <<HOOKS >> /etc/mkinitcpio.conf
+HOOKS="base udev autodetect modconf block consolefont keymap keyboard encrypt lvm2 filesystems fsck"
+HOOKS
 mkinitcpio -p linux

@@ -7,3 +7,4 @@ packer_cache
 
 # Do not include final products in the repo
 boxes
+packer_outdir
