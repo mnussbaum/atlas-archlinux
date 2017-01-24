@@ -22,10 +22,9 @@ LIST
 
 # Prevent guest utilities from being upgraded (they might depend on newer kernel version and cause
 # unresolvable conflict)
-patch -p 0 -i /tmp/virtualbox/pacman.conf.diff
+patch -p 0 -i /tmp/support/pacman.conf.diff
 
 # Restore pacman mirrorlist and refresh databases
-rm /etc/pacman.d/mirrorlist
 mv /etc/pacman.d/mirrorlist.bak /etc/pacman.d/mirrorlist
 pacman -Syy
 
@@ -33,7 +32,7 @@ pacman -Syy
 ### Fixes for known errors ###
 
 # Grub patch to fix boot error: "Fast TSC calibration failed"
-patch -p 0 -i /tmp/virtualbox/grub.diff
+patch -p 0 -i /tmp/support/grub.diff
 grub-mkconfig -o /boot/grub/grub.cfg
 
 cat <<LIST >> /etc/modprobe.d/blacklist.conf

@@ -1,4 +1,4 @@
-VMWare guest utils depend on current Linux kernel, but since the installed kernel might not be
+VirtualBox guest utils depend on current Linux kernel, but since the installed kernel might not be
 up-to-date, it is best that we prevent the guest utils from being upgraded during system upgrades.
 
 --- /etc/pacman.conf
@@ -7,8 +7,8 @@ up-to-date, it is best that we prevent the guest utils from being upgraded durin
  Architecture = auto
 
  # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
--IgnorePkg    = linux linux-firmware linux-headers
-+IgnorePkg    = linux linux-firmware linux-headers open-vm-tools
+-#IgnorePkg   =
++IgnorePkg    = linux linux-firmware linux-headers virtualbox-guest-utils-nox virtualbox-guest-modules
  #IgnoreGroup =
 
  #NoUpgrade   =

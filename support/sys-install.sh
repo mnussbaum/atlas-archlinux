@@ -6,7 +6,7 @@
 # Device       Start   Size   Id  Type
 # /dev/sda1     2048   200M   83  Linux
 # /dev/sda2   411648    ???   83  Linux
-echo -e "o\n  n\n p\n \n \n +200M\n  n\n p\n \n \n \n  w" | fdisk /dev/sda
+echo -e "o\n  n\n p\n \n \n +512M\n  n\n p\n \n \n \n  w" | fdisk /dev/sda
 
 # Key for encrypting root volume
 echo -n "vagrant" | cryptsetup -v --cipher aes-xts-plain64 --key-size 256 luksFormat /dev/sda2 -
@@ -37,12 +37,13 @@ pacstrap /mnt base base-devel grub openssh
 # Generate fstab
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
-# Copy shared resources required for OS installation under chrooted root homefolder
-mv /tmp/shared /mnt/root/
+# Copy resources required for OS installation under chrooted root homefolder
+mv /tmp/support /mnt/root/
 
 # Lock the kernel version...
-arch-chroot /mnt /root/shared/kernel-lock.sh
+arch-chroot /mnt /root/support/kernel-lock.sh
 # Configure the system...
-arch-chroot /mnt /root/shared/os-config.sh
+arch-chroot /mnt /root/support/os-config.sh
 # Configure vagrant...
-arch-chroot /mnt /root/shared/vagrant-config.sh
+arch-chroot /mnt /root/support/vagrant-config.sh
+arch-chroot /mnt /root/support/install.sh

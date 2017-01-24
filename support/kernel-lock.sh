@@ -12,12 +12,12 @@
 
 # Set pacman repository to point to the ARM
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-mv /root/shared/arm-mirrorlist /etc/pacman.d/mirrorlist
+mv /root/support/arm-mirrorlist /etc/pacman.d/mirrorlist
 
 # Install kernel and API headers
 pacman -Syy --noconfirm linux linux-firmware linux-headers
 # Blacklist kernel and headers from upgrades
-patch -p 0 -i /root/shared/pacman.conf.diff
+patch -p 0 -i /root/support/pacman.conf.diff
 
 # Restore pacman mirrorlist and refresh databases
 rm /etc/pacman.d/mirrorlist

@@ -10,7 +10,7 @@ echo 'vagrant:vagrant' | chpasswd
 
 # Configure ssh access
 mkdir /home/vagrant/.ssh
-mv /root/shared/vagrant-insecure-key.pub /home/vagrant/.ssh/authorized_keys
+mv /root/support/vagrant-insecure-key.pub /home/vagrant/.ssh/authorized_keys
 
 # Protect the homefolder and ssh keys
 chown -R vagrant:vagrant /home/vagrant

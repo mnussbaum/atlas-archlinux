@@ -6,12 +6,11 @@
     "isochecksum": null,
     "isochecksumtype": null,
     "cpus": "2",
-    "ramsize": "1024",
+    "ramsize": "2048",
     "vramsize": "16",
     "vramsizebytes": "16384",
     "disksize": "65536",
     "outdir": "{{env `PACKER_OUTDIR`}}",
-    "atlastoken": "{{env `ATLAS_TOKEN`}}",
     "shutdowncmd": "sudo systemctl poweroff"
   },
   "builders": [
@@ -21,7 +20,7 @@
       "output_directory": "{{user `outdir`}}/pristine/virtualbox",
       "guest_additions_mode": "disable",
       "iso_url": "{{user `pathtoiso`}}/{{user `archversion`}}/archlinux-{{user `archversion`}}-dual.iso",
-      "vm_name": "archlinux-{{user `archversion`}}-base",
+      "vm_name": "archlinux-{{user `archversion`}}",
       "iso_checksum": "{{user `isochecksum`}}",
       "iso_checksum_type": "{{user `isochecksumtype`}}",
       "ssh_username": "root",
@@ -45,12 +44,24 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "support/shared",
-      "destination": "/tmp/shared"
+      "source": "support",
+      "destination": "/tmp/support"
+    },
+    {
+      "type": "file",
+      "source": "support/arm-mirrorlist",
+      "destination": "/tmp/arm-mirrorlist"
     },
     {
       "type": "shell",
       "script": "support/sys-install.sh"
     }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "output": "{{user `outdir`}}/packed/archlinux-{{.Provider}}.box",
+      "keep_input_artifact": true
+    }]
   ]
 }
