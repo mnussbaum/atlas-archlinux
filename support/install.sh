@@ -10,7 +10,7 @@ mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 mv /tmp/arm-mirrorlist /etc/pacman.d/mirrorlist
 
 # Install VirtualBox Guest Utils without X.Org support
-pacman -Syy --noconfirm virtualbox-guest-utils-nox
+pacman -Syy --noconfirm virtualbox-guest-utils
 
 # Enable VirtualBox kernel modules
 mkdir -p /etc/modules-load.d
@@ -19,10 +19,6 @@ vboxguest
 vboxsf
 vboxvideo
 LIST
-
-# Prevent guest utilities from being upgraded (they might depend on newer kernel version and cause
-# unresolvable conflict)
-patch -p 0 -i /tmp/support/pacman.conf.diff
 
 # Restore pacman mirrorlist and refresh databases
 mv /etc/pacman.d/mirrorlist.bak /etc/pacman.d/mirrorlist
