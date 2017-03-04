@@ -17,7 +17,7 @@ lvcreate --extents +100%FREE -n root vgcrypt
 
 # Format filesystems
 mkfs.ext2 /dev/sda1
-mkfs.ext4 /dev/mapper/vgcrypt-root
+mkfs.ext4 -O ^has_journal /dev/mapper/vgcrypt-root
 
 # Mount the newly created filesystems
 mkdir -p /mnt
