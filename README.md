@@ -6,18 +6,6 @@ It provides a minimal Arch Linux box with a root volume encrypted with LUKS.
 
 Images are built using [Packer](https://www.packer.io).
 
-### Kernel info
-
-When it comes to Linux kernel modules, the kernel itself is a moving target -
-even minor releases may introduce API changes that could break kernel modules
-used by VM guest utilities. For this reason, the kernel will be upgraded
-separately from other packages, after it has been verified that all guest
-utilities are fully compatible with the new kernel version.
-
-This is the only way to enjoy Arch Linux in a fully functional VM environment.
-
-- **Kernel version: 4.6.4-1**
-
 ### OS info
 
 - x64 architecture

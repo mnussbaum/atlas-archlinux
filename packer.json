@@ -48,11 +48,6 @@
       "destination": "/tmp/support"
     },
     {
-      "type": "file",
-      "source": "support/arm-mirrorlist",
-      "destination": "/tmp/arm-mirrorlist"
-    },
-    {
       "type": "shell",
       "script": "support/sys-install.sh"
     }
