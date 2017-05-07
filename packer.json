@@ -19,7 +19,7 @@
       "guest_os_type": "ArchLinux_64",
       "output_directory": "{{user `outdir`}}/pristine/virtualbox",
       "guest_additions_mode": "disable",
-      "iso_url": "{{user `pathtoiso`}}/{{user `archversion`}}/archlinux-{{user `archversion`}}-dual.iso",
+      "iso_url": "{{user `pathtoiso`}}/{{user `archversion`}}/archlinux-{{user `archversion`}}-x86_64.iso",
       "vm_name": "archlinux-{{user `archversion`}}",
       "iso_checksum": "{{user `isochecksum`}}",
       "iso_checksum_type": "{{user `isochecksumtype`}}",
